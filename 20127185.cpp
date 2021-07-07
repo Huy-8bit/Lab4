@@ -141,6 +141,54 @@ info *inPutArr(info *arr, int size)
     fs2.close();
     return arr;
 }
+void addData()
+{
+    int size;
+    cout << " ADD DATA" << endl;
+    string temp1;
+    string temp2;
+    cout << " Enter keys: ";
+    cin.ignore(); // bị trôi lệnh
+    getline(cin, temp1);
+    cout << "Enter value: ";
+    getline(cin, temp2);
+    cout << endl;
+    fstream fs1("keys.txt", ios::out | ios::app);
+    fstream fs2("value.txt", ios::in | ios::app);
+    fs1 << temp1 << endl;
+    fs2 << temp1 << " : " << temp2 << endl;
+    fs1.close();
+    fs2.close();
+}
+void editData()
+{
+    cout << " EDIT DATA" << endl;
+    int size;
+    string temp1;
+    string temp2;
+    fstream fs1("keys.txt", ios::in);
+    size = sizeFileInPut(fs1);
+    fs1.close();
+    info *arrTemp = new info[size];
+    arrTemp = insertionSort(arrTemp, size);
+    cout << " Enter keys: ";
+    cin.ignore(); // bị trôi lệnh
+    getline(cin, temp1);
+    int mid = binarySearch(arrTemp, 0, size - 1, temp1);
+    cout << mid << endl;
+    if (mid >= 0)
+    {
+        cout << "Enter value: ";
+        getline(cin, temp2);
+        arrTemp[mid].value = temp2;
+        outPut(arrTemp, size);
+    }
+    else
+    {
+        cout << " Not found " << endl;
+    }
+    delete[] arrTemp;
+}
 void process(int seletc)
 {
     int size;
@@ -164,21 +212,6 @@ void process(int seletc)
     }
     else if (seletc == 2)
     {
-        cout << " ADD DATA" << endl;
-        string temp1;
-        string temp2;
-        cout << " Enter keys: ";
-        getline(cin, temp1); // bị trôi lệnh
-        getline(cin, temp1);
-        cout << "Enter value: ";
-        getline(cin, temp2);
-        cout << endl;
-        fstream fs1("keys.txt", ios::out | ios::app);
-        fstream fs2("value.txt", ios::in | ios::app);
-        fs1 << temp1 << endl;
-        fs2 << temp1 << " : " << temp2 << endl;
-        fs1.close();
-        fs2.close();
     }
     else if (seletc == 3)
     {
@@ -204,33 +237,13 @@ void process(int seletc)
         }
         delete[] arr;
     }
+    else if (seletc == 3)
+    {
+        addData();
+    }
     else if (seletc == 4)
     {
-        cout << " EDIT DATA" << endl;
-        string temp1;
-        string temp2;
-        fstream fs1("keys.txt", ios::in);
-        size = sizeFileInPut(fs1);
-        fs1.close();
-        info *arrTemp = new info[size];
-        arrTemp = insertionSort(arrTemp, size);
-        cout << " Enter keys: ";
-        getline(cin, temp1); // bị trôi lệnh
-        getline(cin, temp1);
-        int mid = binarySearch(arrTemp, 0, size - 1, temp1);
-        cout << mid << endl;
-        if (mid >= 0)
-        {
-            cout << "Enter value: ";
-            getline(cin, temp2);
-            arrTemp[mid].value = temp2;
-            outPut(arrTemp, size);
-        }
-        else
-        {
-            cout << " Not found " << endl;
-        }
-        delete[] arrTemp;
+        editData();
     }
     fstream fsFinals("keys.txt", ios::in);
     size = sizeFileInPut(fsFinals);
@@ -241,6 +254,7 @@ void process(int seletc)
     outPut(arrFinal, size);
     delete[] arrFinal;
 }
+
 void selection()
 {
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
