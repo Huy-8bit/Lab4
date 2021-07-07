@@ -143,14 +143,14 @@ void process(int seletc)
 {
     int size;
     fstream fsTemp("keys.txt", ios::in);
+    size = sizeFileInPut(fsTemp);
     if (size < 100)
     {
         fstream fsInFile("Oxford English Dictionary.txt", ios::in);
         inPut(fsInFile);
     }
     fsTemp.close();
-    fstream fs("keys.txt", ios::in);
-    size = sizeFileInPut(fs);
+
     if (seletc == 1)
     {
 
