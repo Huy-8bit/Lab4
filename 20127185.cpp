@@ -187,7 +187,6 @@ void process(int seletc)
         int mid = binarySearch(arr, 0, size - 1, temp1);
         if (mid >= 0)
         {
-            getline(cin, temp2);
             swap(arr[mid], arr[size - 1]);
             size--;
             outPut(arr, size);
