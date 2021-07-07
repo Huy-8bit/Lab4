@@ -3,6 +3,8 @@
 #include <sstream>
 #include <cstring>
 #include <fstream>
+#include <ctime>
+
 using namespace std;
 struct info
 {
