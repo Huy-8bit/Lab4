@@ -196,10 +196,11 @@ void editData()
     size = sizeFileInPut(fs1);
     fs1.close();
     info *arrTemp = new info[size];
+    arrTemp= inPutArr(arrTemp, size);
     arrTemp = insertionSort(arrTemp, size);
     cout << " Enter keys: ";
     cin.ignore(); // bị trôi lệnh
-    getline(cin, temp1);
+    cin >> temp1;
     int mid = binarySearch(arrTemp, 0, size - 1, temp1);
     cout << mid << endl;
     if (mid >= 0)
