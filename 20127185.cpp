@@ -141,15 +141,19 @@ info *inPutArr(info *arr, int size)
 }
 void process(int seletc)
 {
-    fstream fsInFile("Oxford English Dictionary.txt", ios::in);
-    int size = sizeFileInPut(fsInFile);
-    fsInFile.clear();
-    fsInFile.seekg(0, ios::beg);
-
-    inPut(fsInFile);
-
+    int size;
+    fstream fsTemp("keys.txt", ios::in);
+    if (size < 100)
+    {
+        fstream fsInFile("Oxford English Dictionary.txt", ios::in);
+        inPut(fsInFile);
+    }
+    fsTemp.close();
+    fstream fs("keys.txt", ios::in);
+    size = sizeFileInPut(fs);
     if (seletc == 1)
     {
+
         info *arr = new info[size];
         arr = inPutArr(arr, size);
         arr = insertionSort(arr, size);
