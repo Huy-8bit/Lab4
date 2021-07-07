@@ -30,6 +30,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 'D : v. Colloq. (usu. After pronouns) had, would (i'd; he'd). [abbreviation]
 'Em : pron. Colloq. Them.
 'Ll : v. (usu. After pronouns) shall, will (i'll; that'll). [abbreviation]
@@ -355,7 +366,7 @@ Acceptable : adj. 1 worth accepting, welcome. 2 tolerable.  acceptability n. Ac
 Acceptance : n. 1 willingness to accept. 2 affirmative answer to an invitation etc. 3 approval, belief (found wide acceptance).
 Access : —n. 1 way of approach or entry (shop with rear access). 2 a right or opportunity to reach or use or visit; admittance (access to secret files, to the prisoner). B accessibility. 3 archaic outburst (an access of anger). —v. 1 computing gain access to (data etc.). 2 accession. [french: related to *accede]
 Access :road  n. Road giving access only to the properties along it.
-Access :time  n. Computing time taken to retrieve data from storage.
+
 Access :road  n. Road giving access only to the properties along it.
 Access :time  n. Computing time taken to retrieve data from storage.
 Accessible : adj. (often foll. By to) 1 reachable or obtainable; readily available. 2 easy to understand.  accessibility n.

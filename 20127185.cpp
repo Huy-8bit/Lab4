@@ -115,7 +115,7 @@ void outPut(info *arrFinal, int &size)
     for (int i = 0; i < size; i++)
     {
         fs1 << arrFinal[i].keys << endl;
-        fs2 << arrFinal[i].value << endl;
+        fs2 << arrFinal[i].keys << " : " << arrFinal[i].value << endl;
     }
     fs1.close();
     fs2.close();
@@ -196,7 +196,7 @@ void editData()
     size = sizeFileInPut(fs1);
     fs1.close();
     info *arrTemp = new info[size];
-    arrTemp= inPutArr(arrTemp, size);
+    arrTemp = inPutArr(arrTemp, size);
     arrTemp = insertionSort(arrTemp, size);
     cout << " Enter keys: ";
     cin.ignore(); // bị trôi lệnh
@@ -206,6 +206,7 @@ void editData()
     if (mid >= 0)
     {
         cout << "Enter value: ";
+        cin.ignore();
         getline(cin, temp2);
         arrTemp[mid].value = temp2;
         outPut(arrTemp, size);
