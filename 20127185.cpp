@@ -161,7 +161,7 @@ void process(int seletc)
         string temp1;
         string temp2;
         cout << " Enter keys: ";
-        getline(cin, temp1);
+        getline(cin, temp1); // bị trôi lệnh
         getline(cin, temp1);
         cout << "Enter value: ";
         getline(cin, temp2);
@@ -173,20 +173,44 @@ void process(int seletc)
         fs1.close();
         fs2.close();
     }
+    else if (seletc == 3)
+    {
+        cout << " Deleted DATA " << endl;
+        string temp1;
+        fstream fs("keys.txt", ios::in);
+        cout << " Enter keys: ";
+        size = sizeFileInPut(fs);
+        getline(cin, temp1); // bị trôi lệnh
+        getline(cin, temp1);
+        info *arr = new info[size];
+        arr = inPutArr(arr, size);
+        int mid = binarySearch(arr, 0, size - 1, temp1);
+        if (mid >= 0)
+        {
+            getline(cin, temp2);
+            swap(arr[mid], arr[size - 1]);
+            size--;
+            outPut(arr, size);
+        }
+        else
+        {
+            cout << "Not found" << endl;
+        }
+        delete[] arr;
+    }
     else if (seletc == 4)
     {
         cout << " EDIT DATA" << endl;
         string temp1;
         string temp2;
         fstream fs1("keys.txt", ios::in);
-        int size = sizeFileInPut(fs1);
+        size = sizeFileInPut(fs1);
         fs1.close();
         info *arrTemp = new info[size];
         arrTemp = insertionSort(arrTemp, size);
         cout << " Enter keys: ";
         getline(cin, temp1);
-
-        getline(cin, temp1);
+        cout << "1" << endl;
         int mid = binarySearch(arrTemp, 0, size - 1, temp1);
         if (mid >= 0)
         {
@@ -232,7 +256,5 @@ void selection()
 int main()
 {
     selection();
-
-    system("pause");
     return 0;
 }
