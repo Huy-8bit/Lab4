@@ -173,7 +173,6 @@ void process(int seletc)
         fs1.close();
         fs2.close();
     }
-
     else if (seletc == 4)
     {
         cout << " EDIT DATA" << endl;
@@ -201,32 +200,6 @@ void process(int seletc)
             cout << " Not found " << endl;
         }
         delete[] arrTemp;
-    }
-    else if (seletc == 3)
-    {
-        cout << " DELETE DATA" << endl;
-        string temp1;
-        getline(cin, temp1);
-        fstream fs("key.txt", ios::in);
-        int size = sizeFileInPut(fs);
-        info *arr = new info[size];
-        arr = inPutArr(arr, size);
-        arr = insertionSort(arr, size);
-        int mid = binarySearch(arr, 0, size - 1, temp1);
-        if (mid >= 0)
-        {
-            swap(arr[mid], arr[size - 1]);
-            size--;
-            info *arrTemp = new info[size];
-            for (int i = 0; i < size; i++)
-            {
-                arrTemp[i] = arr[i];
-            }
-            outPut(arrTemp, size);
-        }
-
-        delete[] arr;
-        fs.close();
     }
     fstream fsFinals("keys.txt", ios::in);
     size = sizeFileInPut(fsFinals);
