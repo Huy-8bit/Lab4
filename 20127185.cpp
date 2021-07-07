@@ -76,6 +76,7 @@ void search(info *arr, int size)
     string x;
     cin >> x;
     int temp = binarySearch(arr, 0, size - 1, x);
+    cout << temp << endl;
     fstream fs3("History.txt", ios::out | ios::app);
     fs3 << x << " : ";
     if (temp > 0)
@@ -191,7 +192,7 @@ void process(int seletc)
             size--;
             outPut(arr, size);
         }
-        else
+        else if (mid == -1)
         {
             cout << "Not found" << endl;
         }
@@ -208,9 +209,10 @@ void process(int seletc)
         info *arrTemp = new info[size];
         arrTemp = insertionSort(arrTemp, size);
         cout << " Enter keys: ";
+        getline(cin, temp1); // bị trôi lệnh
         getline(cin, temp1);
-        cout << "1" << endl;
         int mid = binarySearch(arrTemp, 0, size - 1, temp1);
+        cout << mid << endl;
         if (mid >= 0)
         {
             cout << "Enter value: ";
