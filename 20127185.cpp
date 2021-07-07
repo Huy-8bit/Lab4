@@ -160,6 +160,32 @@ void addData()
     fs1.close();
     fs2.close();
 }
+void deleteData()
+{
+
+    int size;
+    cout << " Deleted DATA " << endl;
+    string temp1;
+    fstream fs("keys.txt", ios::in);
+    cout << " Enter keys: ";
+    size = sizeFileInPut(fs);
+    getline(cin, temp1); // bị trôi lệnh
+    getline(cin, temp1);
+    info *arr = new info[size];
+    arr = inPutArr(arr, size);
+    int mid = binarySearch(arr, 0, size - 1, temp1);
+    if (mid >= 0)
+    {
+        swap(arr[mid], arr[size - 1]);
+        size--;
+        outPut(arr, size);
+    }
+    else if (mid == -1)
+    {
+        cout << "Not found" << endl;
+    }
+    delete[] arr;
+}
 void editData()
 {
     cout << " EDIT DATA" << endl;
@@ -189,6 +215,7 @@ void editData()
     }
     delete[] arrTemp;
 }
+
 void process(int seletc)
 {
     int size;
@@ -212,34 +239,11 @@ void process(int seletc)
     }
     else if (seletc == 2)
     {
-    }
-    else if (seletc == 3)
-    {
-        cout << " Deleted DATA " << endl;
-        string temp1;
-        fstream fs("keys.txt", ios::in);
-        cout << " Enter keys: ";
-        size = sizeFileInPut(fs);
-        getline(cin, temp1); // bị trôi lệnh
-        getline(cin, temp1);
-        info *arr = new info[size];
-        arr = inPutArr(arr, size);
-        int mid = binarySearch(arr, 0, size - 1, temp1);
-        if (mid >= 0)
-        {
-            swap(arr[mid], arr[size - 1]);
-            size--;
-            outPut(arr, size);
-        }
-        else if (mid == -1)
-        {
-            cout << "Not found" << endl;
-        }
-        delete[] arr;
-    }
-    else if (seletc == 3)
-    {
         addData();
+    }
+    else if (seletc == 3)
+    {
+        deleteData();
     }
     else if (seletc == 4)
     {
