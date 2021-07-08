@@ -294,7 +294,7 @@ int main()
 }
 struct node
 {
-    info temp;
+    string temp;
     node *next;
 };
 typedef node *hashtable[sizeTable];
@@ -305,4 +305,62 @@ void tableInitialization(hashtable &H)
     {
         H[i] = NULL;
     }
+}
+int hashKeys(string str)
+{
+    //abcde
+    long sum = 0, mul = 1;
+    for (int i = 0; i < str.length(); i++)
+    {
+        mul = (i % 4 == 0) ? 1 : mul * 256;
+        sum += str.at(i) * mul;
+    }
+    return (int)(abs(sum) % sizeTable);
+}
+void addNode(hashtable &H, string temp1)
+{
+    node *p = new node{temp1, NULL};
+    int num = hashKeys(temp1);
+    if (H[num] == NULL)
+    {
+        H[num] = p;
+    }
+    else
+    {
+        node *q = H[num];
+        while (q->next != NULL)
+        {
+            q = q->next;
+        }
+        q->next = p;
+    }
+}
+node *find_node(hashtable &H, string temp)
+{
+    int num = hashKeys(temp);
+    node *p = H[num];
+    while (p != NULL && p->temp != temp)
+    {
+        p = p->next;
+    }
+    if (p == NULL)
+    {
+        return NULL;
+    }
+    return p;
+}
+void search(hashtable &H)
+{
+    
+}
+void loadFile(hashtable &H)
+{
+    fstream fs("keys.txt", ios::in);
+    while (!fs.eof())
+    {
+        string temp1;
+        getline(fs, temp1);
+        addNode(H, temp1);
+    }
+    fs.close();
 }
