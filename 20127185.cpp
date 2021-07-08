@@ -351,6 +351,10 @@ node *find_node(hashtable &H, string temp)
 }
 void search(hashtable &H)
 {
+    node *find;
+    string temp;
+    cout << "Enter: ";
+    getline(cin,temp);
     
 }
 void loadFile(hashtable &H)
