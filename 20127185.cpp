@@ -338,11 +338,10 @@ node *find_node(hashtable &H, string temp)
         return NULL;
     }
     return p;
- 
 }
 void search(hashtable &H)
 {
-   
+
     node *find;
     string temp;
     cout << "Enter: ";
@@ -377,15 +376,23 @@ void loadFile(hashtable &H)
 
 int main()
 {
-    //selection();
-    // fstream fs1("oxford English Dictionary.txt",ios::in);
-    // input(fs1);
+    int Select;
+    //cin >> Select;
+    Select = 1;
+    if (Select == 0)
+    {
+        selection();
+        fstream fs("oxford English Dictionary.txt", ios::in);
+        input(fs);
 
-    // fs.close();
-
-    hashtable H;
-    tableInitialization(H);
-    loadFile(H);
-    search(H);
+        fs.close();
+    }
+    else
+    {
+        hashtable H;
+        tableInitialization(H);
+        loadFile(H);
+        search(H);
+    }
     return 0;
 }
