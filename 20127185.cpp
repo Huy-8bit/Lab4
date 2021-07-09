@@ -338,9 +338,11 @@ node *find_node(hashtable &H, string temp)
         return NULL;
     }
     return p;
+ 
 }
 void search(hashtable &H)
 {
+   
     node *find;
     string temp;
     cout << "Enter: ";
@@ -372,6 +374,7 @@ void loadFile(hashtable &H)
     fs1.close();
     fs2.close();
 }
+
 int main()
 {
     //selection();
