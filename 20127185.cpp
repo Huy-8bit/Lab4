@@ -339,7 +339,7 @@ node *find_node(hashtable &H, string temp)
     }
     return p;
 }
-void search(hashtable &H)
+void searchHash(hashtable &H)
 {
 
     node *find;
@@ -392,7 +392,7 @@ int main()
         hashtable H;
         tableInitialization(H);
         loadFile(H);
-        search(H);
+        searchHash(H);
     }
     return 0;
 }
