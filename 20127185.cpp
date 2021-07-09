@@ -6,7 +6,7 @@
 #include <ctime>
 
 using namespace std;
-#define sizeTable 10000
+#define sizeTable 12000
 struct info
 {
     string keys;
@@ -32,7 +32,7 @@ int binarySearch(info *arr, int l, int r, string x)
 
 info *insertionSort(info *arr, int n)
 {
-    cout << " Run function insertionSort" << endl;
+    cout << " Run function insertionSort " << endl;
     int i, j;
     string keys;
     for (i = 1; i < n; i++)
@@ -264,7 +264,6 @@ void process(int seletc)
 
 void selection()
 {
-    cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
     cout << "1. SEARCH" << endl;
     cout << "2. ADD DATA" << endl;
     cout << "3. DELETE DATA" << endl;
@@ -339,6 +338,22 @@ node *find_node(hashtable &H, string temp)
     }
     return p;
 }
+void loadFile(hashtable &H)
+{
+    fstream fs1("keys.txt", ios::in);
+    fstream fs2("value.txt", ios::in);
+    while (!fs1.eof())
+    {
+        string temp1;
+        string temp2;
+        getline(fs1, temp1);
+        getline(fs2, temp2);
+        info table{temp1, temp2};
+        addNode(H, table);
+    }
+    fs1.close();
+    fs2.close();
+}
 void searchHash(hashtable &H)
 {
 
@@ -357,29 +372,75 @@ void searchHash(hashtable &H)
         cout << find->table.value << endl;
     }
 }
-void loadFile(hashtable &H)
+void addDataHash(hashtable &H)
 {
-    fstream fs1("keys.txt", ios::in);
-    fstream fs2("value.txt", ios::in);
-    while (!fs1.eof())
+    info table;
+    string temp1;
+    string temp2;
+    cout << "Enter keys: ";
+    getline(cin, temp1);
+    cout << "Enter values: ";
+    getline(cin, temp2);
+    table.keys = temp1;
+    table.value = temp2;
+    addNode(H, table);
+}
+void deleteDataHash(hashtable &H)
+{
+    node *deleteData;
+    string temp1;
+    cout << "Enter Keys: ";
+    getline(cin, temp1);
+    int index = hashKeys(temp1);
+    deleteData = find_node(H, temp1);
+    if (deleteData == NULL)
     {
-        string temp1;
-        string temp2;
-        getline(fs1, temp1);
-        getline(fs2, temp2);
-        info table{temp1, temp2};
-        addNode(H, table);
+        cout << "Don't see" << endl
+             << endl;
     }
-    fs1.close();
-    fs2.close();
+    else if (deleteData == H[index])
+    {
+        H[index] = H[index]->next;
+        delete deleteData;
+    }
+    else
+    {
+        node *q = H[index];
+        q->next = deleteData->next;
+        delete deleteData;
+    }
+}
+void editDataHash(hashtable &H)
+{
+    node *editDataHash;
+    string temp1;
+    cout << "Enter Keys: ";
+    getline(cin, temp1);
+    editDataHash = find_node(H, temp1);
+    if (editDataHash == NULL)
+    {
+        cout << "Don't see" << endl
+             << endl;
+    }
+    else
+    {
+        cout << "Enter value: ";
+        string temp2;
+        getline(cin, temp2);
+        editDataHash->table.value = temp2;
+    }
 }
 
 int main()
 {
+    cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
+    cout << "1. Run with array" << endl;
+    cout << "2. Run with table " << endl;
+    cout << "       EXIT        " << endl;
+    cout << " Enter your choice: " << endl;
     int Select;
-    //cin >> Select;
-    Select = 1;
-    if (Select == 0)
+    cin >> Select;
+    if (Select == 1)
     {
         selection();
         fstream fs("oxford English Dictionary.txt", ios::in);
@@ -387,12 +448,15 @@ int main()
 
         fs.close();
     }
-    else
+    else if (Select == 2)
     {
         hashtable H;
         tableInitialization(H);
         loadFile(H);
         searchHash(H);
+        addDataHash(H);
+        deleteDataHash(H);
+        editDataHash(H);
     }
     return 0;
 }
