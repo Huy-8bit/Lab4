@@ -430,7 +430,31 @@ void editDataHash(hashtable &H)
         editDataHash->table.value = temp2;
     }
 }
+void saveDataHash(hashtable &H)
+{
+    ofstream ofs1("keys.txt", std::ofstream::out);
+    ofs1.close();
+    ofstream ofs2("value.txt", std::ofstream::out);
+    ofs2.close();
+    fstream fs1("keys.txt", ios::out);
+    fstream fs2("value.txt", ios::out);
 
+    for (int i = 0; i < sizeTable; i++)
+    {
+        node *temp = H[i];
+        while (temp != NULL)
+        {
+            if (temp->table.keys.size() > 0)
+            {
+                fs1 << temp->table.keys << endl;
+                fs2 << temp->table.value << endl;
+                temp = temp->next;
+            }
+        }
+    }
+    fs1.close();
+    fs2.close();
+}
 int main()
 {
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
