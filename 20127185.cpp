@@ -98,6 +98,7 @@ void search(info *arr, int size)
     cin >> x;
     int temp = binarySearch(arr, 0, size - 1, x);
     fstream fs3("History.txt", ios::out | ios::app);
+    fs3 << "Search : " << endl;
     fs3 << x << " : ";
     if (temp > 0)
     {
@@ -138,9 +139,12 @@ info *inputArr(info *arr, int size)
         string temp2;
         getline(fs1, temp1);
         getline(fs2, temp2);
-        arr[i].keys = temp1;
-        arr[i].value = temp2;
-        i++;
+        if (temp1.length() > 0)
+        {
+            arr[i].keys = temp1;
+            arr[i].value = temp2;
+            i++;
+        }
     }
     fs1.clear();
     fs2.clear();
@@ -151,6 +155,8 @@ info *inputArr(info *arr, int size)
 void addData()
 {
     int size;
+    fstream fs3("History.txt", ios::out | ios::app);
+    fs3 << "ADD data:" << endl;
     cout << " ADD DATA" << endl;
     string temp1;
     string temp2;
@@ -163,26 +169,31 @@ void addData()
     fstream fs1("keys.txt", ios::out | ios::app);
     fstream fs2("value.txt", ios::in | ios::app);
     fs1 << temp1 << endl;
-    fs2 << temp1 << " : " << temp2 << endl;
+    fs2 << temp2 << endl;
+    fs3 << temp1 << " : " << temp2 << endl;
     fs1.close();
     fs2.close();
+    fs3.close();
 }
 void deleteData()
 {
-
+    fstream fs3("History.txt", ios::out | ios::app);
     int size;
     cout << " Deleted DATA " << endl;
+    fs3 << " Deleted DATA " << endl;
     string temp1;
     fstream fs("keys.txt", ios::in);
     cout << " Enter keys: ";
     size = sizeFileInput(fs);
     cin.ignore();
     getline(cin, temp1);
+    fs3 << temp1 << " : ";
     info *arr = new info[size];
     arr = inputArr(arr, size);
     int mid = binarySearch(arr, 0, size - 1, temp1);
     if (mid >= 0)
     {
+        fs3 << arr[mid].value << endl;
         swap(arr[mid], arr[size - 1]);
         size--;
         saveFileArray(arr, size);
@@ -190,7 +201,9 @@ void deleteData()
     else if (mid == -1)
     {
         cout << "Not found" << endl;
+        fs3 << "Not found" << endl;
     }
+    fs3.close();
     delete[] arr;
 }
 void editData()
@@ -358,7 +371,7 @@ void loadFile(hashtable &H)
 }
 void searchHash(hashtable &H)
 {
-
+    fstream fsH("History.txt", ios::out | ios::app);
     node *find;
     string temp;
     cout << "Enter: ";
@@ -367,13 +380,16 @@ void searchHash(hashtable &H)
     find = find_node(H, temp);
     if (find == NULL)
     {
-        cout << "tu di ma tim" << endl
-             << endl;
+        cout << "Not found" << endl;
+        fsH << temp << " : "
+            << "Not found" << endl;
     }
     else
     {
         cout << find->table.value << endl;
+        fsH << temp << " : " << find->table.value << endl;
     }
+    fsH.close();
 }
 void addDataHash(hashtable &H)
 {
@@ -492,7 +508,8 @@ void selectionHash(hashtable &H)
 }
 int main()
 {
-    system("color 80");
+
+    system("color 02");
     system("cls");
     fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
