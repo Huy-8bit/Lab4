@@ -12,6 +12,17 @@ struct info
     string keys;
     string value;
 };
+int sizeFileInput(fstream &fsInFile)
+{
+    int size = 0;
+    while (!fsInFile.eof())
+    {
+        string temp;
+        getline(fsInFile, temp);
+        size++;
+    }
+    return size;
+}
 int binarySearch(info *arr, int l, int r, string x)
 {
     if (r >= l)
@@ -32,7 +43,7 @@ int binarySearch(info *arr, int l, int r, string x)
 
 info *insertionSort(info *arr, int n)
 {
-    cout << " Run function insertionSort " << endl;
+    cout << "Loading..." << endl;
     int i, j;
     string keys;
     for (i = 1; i < n; i++)
@@ -50,28 +61,34 @@ info *insertionSort(info *arr, int n)
 }
 void input(fstream &fsInFile)
 {
-    fstream fs("keys.txt", ios::out);
-    fstream fs1("value.txt", ios::out);
-    int size = 0;
-    while (!fsInFile.eof())
+    fstream fsTest("keys.txt", ios::in);
+    int size = sizeFileInput(fsTest);
+    fsTest.close();
+    if (size > 0)
     {
-        string line;
-        getline(fsInFile, line);
-        if (line.size() > 3)
+        fstream fs("keys.txt", ios::out);
+        fstream fs1("value.txt", ios::out);
+
+        while (!fsInFile.eof())
         {
-            string keys;
-            string value;
-            stringstream ss(line);
-            getline(ss, keys, ' ');
-            getline(ss, value, '\n');
-            fs << keys << endl;
-            fs1 << keys << " :" << value << endl;
+            string line;
+            getline(fsInFile, line);
+            if (line.size() > 3)
+            {
+                string keys;
+                string value;
+                stringstream ss(line);
+                getline(ss, keys, ' ');
+                getline(ss, value, '\n');
+                fs << keys << endl;
+                fs1 << keys << " :" << value << endl;
+            }
         }
+        fs.clear();
+        fs1.clear();
+        fs.close();
+        fs1.close();
     }
-    fs.clear();
-    fs1.clear();
-    fs.close();
-    fs1.close();
 }
 void search(info *arr, int size)
 {
@@ -79,7 +96,6 @@ void search(info *arr, int size)
     string x;
     cin >> x;
     int temp = binarySearch(arr, 0, size - 1, x);
-    cout << temp << endl;
     fstream fs3("History.txt", ios::out | ios::app);
     fs3 << x << " : ";
     if (temp > 0)
@@ -93,17 +109,6 @@ void search(info *arr, int size)
         fs3 << " Don't see it" << endl;
     }
     fs3.close();
-}
-int sizeFileInput(fstream &fsInFile)
-{
-    int size = 0;
-    while (!fsInFile.eof())
-    {
-        string temp;
-        getline(fsInFile, temp);
-        size++;
-    }
-    return size;
 }
 void output(info *arrFinal, int &size)
 {
@@ -264,14 +269,13 @@ void process(int seletc)
 
 void selection()
 {
+    cout << " ARRAY " << endl;
     cout << "1. SEARCH" << endl;
     cout << "2. ADD DATA" << endl;
     cout << "3. DELETE DATA" << endl;
     cout << "4. EDIT DATA" << endl;
     cout << "5. EXIT " << endl;
-    cout << endl
-         << endl
-         << " Choose your choice : ";
+    cout << " Choose your choice : ";
     int seletc;
     cin >> seletc;
     if (seletc < 5)
@@ -379,6 +383,7 @@ void addDataHash(hashtable &H)
     string temp1;
     string temp2;
     cout << "Enter keys: ";
+    cin.ignore(); // bị trôi lệnh
     getline(cin, temp1);
     cout << "Enter values: ";
     getline(cin, temp2);
@@ -438,6 +443,7 @@ void saveDataHash(hashtable &H)
     ofs1.close();
     ofstream ofs2("value.txt", std::ofstream::out);
     ofs2.close();
+    system("pause");
     fstream fs1("keys.txt", ios::out);
     fstream fs2("value.txt", ios::out);
 
@@ -456,34 +462,64 @@ void saveDataHash(hashtable &H)
     fs1.close();
     fs2.close();
 }
+void selectionHash(hashtable &H)
+{
+    cout << " HASH TABLE " << endl;
+    cout << "1. SEARCH" << endl;
+    cout << "2. ADD DATA" << endl;
+    cout << "3. DELETE DATA" << endl;
+    cout << "4. EDIT DATA" << endl;
+    cout << endl
+         << endl
+         << " Choose your choice : ";
+    int seletc;
+    cin >> seletc;
+    if (seletc == 1)
+    {
+        searchHash(H);
+    }
+    else if (seletc == 2)
+    {
+        addDataHash(H);
+    }
+    else if (seletc == 3)
+    {
+        deleteDataHash(H);
+    }
+    else if (seletc == 4)
+    {
+        editDataHash(H);
+    }
+    saveDataHash(H);
+}
 int main()
 {
     fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
     cout << "1. Run with array" << endl;
     cout << "2. Run with table " << endl;
-    cout << "       EXIT        " << endl;
-    cout << " Enter your choice: " << endl;
+    cout << "3.      EXIT        " << endl;
+    cout << " Enter your choice: ";
     int Select;
     cin >> Select;
+    //Select = 2;
     if (Select == 1)
     {
         selection();
-
+        main();
         input(fs);
     }
     else if (Select == 2)
     {
+        cout << "Loading..." << endl;
         input(fs);
         hashtable H;
         tableInitialization(H);
         loadFile(H);
-        searchHash(H);
-        addDataHash(H);
-        deleteDataHash(H);
-        editDataHash(H);
-        searchHash(H);
+        selectionHash(H);
+        main();
     }
+
     fs.close();
     return 0;
 }
