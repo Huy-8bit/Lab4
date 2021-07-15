@@ -1,0 +1,19 @@
+Run with array
+Sort array:  Time total:26886ms
+binarySearch  Time total:0msRun with array
+Sort array:  Time total:26690ms
+binarySearch  Time total:0ms
+Run with Hash Table
+loadFile  Time total:101ms
+find_node  Time total:0ms
+Run with Hash Table
+loadFile  Time total:85ms
+Run with Hash Table
+loadFile  Time total:104ms
+find_node  Time total:0ms
+Run with Hash Table
+loadFile  Time total:235ms
+find_node  Time total:0ms
+Run with array
+Sort array:  Time total:28700ms
+binarySearch  Time total:0ms

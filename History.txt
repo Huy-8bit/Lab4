@@ -1,0 +1,32 @@
+Run with array
+Search : 
+Popinjay :  n. Fop, conceited person. [arabic babagha parrot]
+Run with array
+ADD data:
+duy : ba vl
+Run with Hash Table
+ADD data
+duy : ba vl
+Run with Hash Table
+ Deleted DATA 
+Run with array
+Search : 
+duy :  Don't see it
+Run with array
+Search : 
+Flight : path  n. Planned course of an aircraft etc.
+Run with array
+Search : 
+Canoodle :  v. (-ling) colloq. Kiss and cuddle. [origin unknown]
+Run with Hash Table
+ADD data
+Run with Hash Table
+Run with Hash Table
+ADD data
+Canoodle :  v. (-ling) colloq. Kiss and cuddle. [origin unknown]
+Run with Hash Table
+ADD data
+Canoodle :  v. (-ling) colloq. Kiss and cuddle. [origin unknown]
+Run with array
+Search : 
+Canoodle :  v. (-ling) colloq. Kiss and cuddle. [origin unknown]

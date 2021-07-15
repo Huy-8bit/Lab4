@@ -6,7 +6,6 @@
 #include <ctime>
 #include <Windows.h>
 using namespace std;
-
 #define sizeTable 12000
 struct info
 {
@@ -34,6 +33,7 @@ int binarySearch(info *arr, int l, int r, string x)
         int mid = l + (r - l) / 2;
         if (arr[mid].keys == x)
         {
+            fsTime << "binarySearch ";
             end = clock();
             double duration = (double)(end - start);
             fsTime << " Time total:" << duration << "ms" << endl;
@@ -47,6 +47,7 @@ int binarySearch(info *arr, int l, int r, string x)
         }
         return binarySearch(arr, mid + 1, r, x);
     }
+    fsTime << "binarySearch ";
     end = clock();
     double duration = (double)(end - start);
     fsTime << " Time total:" << duration << "ms" << endl;
@@ -57,6 +58,7 @@ int binarySearch(info *arr, int l, int r, string x)
 info *insertionSort(info *arr, int n)
 {
     fstream fsTime("Time.txt", ios::out | ios::app);
+    fsTime << "Sort array: ";
     clock_t start, end;
     start = clock();
     cout << "Loading..." << endl;
@@ -290,17 +292,17 @@ void process(int seletc)
     {
         editData();
     }
-    if (seletc != 1)
-    {
-        fstream fsFinals("keys.txt", ios::in);
-        size = sizeFileInput(fsFinals);
-        fsFinals.close();
-        info *arrFinal = new info[size];
-        arrFinal = inputArr(arrFinal, size);
-        arrFinal = insertionSort(arrFinal, size);
-        saveFileArray(arrFinal, size);
-        delete[] arrFinal;
-    }
+    // if (seletc != 1)
+    // {
+    //     fstream fsFinals("keys.txt", ios::in);
+    //     size = sizeFileInput(fsFinals);
+    //     fsFinals.close();
+    //     info *arrFinal = new info[size];
+    //     arrFinal = inputArr(arrFinal, size);
+    //     arrFinal = insertionSort(arrFinal, size);
+    //     saveFileArray(arrFinal, size);
+    //     delete[] arrFinal;
+    // }
 }
 
 void selection()
@@ -368,6 +370,7 @@ void addNode(hashtable &H, info table)
 node *find_node(hashtable &H, string temp)
 {
     fstream fsTime("Time.txt", ios::out | ios::app);
+    fsTime << "find_node ";
     clock_t start, end;
     start = clock();
     int num = hashKeys(temp);
@@ -392,6 +395,10 @@ node *find_node(hashtable &H, string temp)
 }
 void loadFile(hashtable &H)
 {
+    fstream fsTime("Time.txt", ios::out | ios::app);
+    fsTime << "loadFile ";
+    clock_t start, end;
+    start = clock();
     fstream fs1("keys.txt", ios::in);
     fstream fs2("value.txt", ios::in);
     while (!fs1.eof())
@@ -405,6 +412,10 @@ void loadFile(hashtable &H)
     }
     fs1.close();
     fs2.close();
+    end = clock();
+    double duration = (double)(end - start);
+    fsTime << " Time total:" << duration << "ms" << endl;
+    fsTime.close();
 }
 void searchHash(hashtable &H)
 {
@@ -509,7 +520,6 @@ void saveDataHash(hashtable &H)
     ofs2.close();
     fstream fs1("keys.txt", ios::out);
     fstream fs2("value.txt", ios::out);
-
     for (int i = 0; i < sizeTable; i++)
     {
         node *temp = H[i];
@@ -561,13 +571,14 @@ int main()
 {
     fstream fsTime("Time.txt", ios::out | ios::app);
     fstream fsH("History.txt", ios::out | ios::app);
-    system("color 02");
+    system("color 80");
     system("cls");
     fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
     cout << "1. Run with array" << endl;
     cout << "2. Run with  Hash Table " << endl;
-    cout << "3.      EXIT        " << endl;
+    cout << "3.    Show History        " << endl;
+    cout << "4.       EXIT        " << endl;
     cout << " Enter your choice: ";
     int Select;
     cin >> Select;
@@ -594,10 +605,22 @@ int main()
         system("pause");
         main();
     }
-
-    Beep(523, 500);
-
+    else if (Select == 3)
+    {
+        fstream History("History.txt", ios::in);
+        while (!History.eof())
+        {
+            string temp;
+            getline(History, temp);
+            cout << temp << endl;
+        }
+        system("pause");
+        main();
+    }
+    else
+    {
+        Beep(523, 1000);
+    }
     fs.close();
-
     return 0;
 }
