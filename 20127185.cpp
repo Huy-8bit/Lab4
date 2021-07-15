@@ -26,24 +26,39 @@ int sizeFileInput(fstream &fsInFile)
 }
 int binarySearch(info *arr, int l, int r, string x)
 {
+    fstream fsTime("Time.txt", ios::out | ios::app);
+    clock_t start, end;
+    start = clock();
     if (r >= l)
     {
         int mid = l + (r - l) / 2;
         if (arr[mid].keys == x)
         {
+            end = clock();
+            double duration = (double)(end - start);
+            fsTime << " Time total:" << duration << "ms" << endl;
+            fsTime.close();
             return mid;
         }
         else if (arr[mid].keys > x)
         {
+
             return binarySearch(arr, l, mid - 1, x);
         }
         return binarySearch(arr, mid + 1, r, x);
     }
+    end = clock();
+    double duration = (double)(end - start);
+    fsTime << " Time total:" << duration << "ms" << endl;
+    fsTime.close();
     return -1;
 }
 
 info *insertionSort(info *arr, int n)
 {
+    fstream fsTime("Time.txt", ios::out | ios::app);
+    clock_t start, end;
+    start = clock();
     cout << "Loading..." << endl;
     int i, j;
     string keys;
@@ -58,6 +73,10 @@ info *insertionSort(info *arr, int n)
         }
         arr[j + 1].keys = keys;
     }
+    end = clock();
+    double duration = (double)(end - start);
+    fsTime << " Time total:" << duration << "ms" << endl;
+    fsTime.close();
     return arr;
 }
 void input(fstream &fsInFile)
@@ -208,6 +227,8 @@ void deleteData()
 }
 void editData()
 {
+    fstream fs3("History.txt", ios::out | ios::app);
+    fs3 << " EDIT DATA" << endl;
     cout << " EDIT DATA" << endl;
     int size;
     string temp1;
@@ -221,19 +242,24 @@ void editData()
     cout << " Enter keys: ";
     cin.ignore(); // bị trôi lệnh
     cin >> temp1;
+    fs3 << temp1 << " : " << endl;
     int mid = binarySearch(arrTemp, 0, size - 1, temp1);
     if (mid >= 0)
     {
+        fs3 << " prev value: " << arrTemp[mid].value << endl;
         cout << "Enter value: ";
         cin.ignore();
         getline(cin, temp2);
+        fs3 << " New value: " << temp2 << endl;
         arrTemp[mid].value = temp2;
         saveFileArray(arrTemp, size);
     }
     else
     {
         cout << " Not found " << endl;
+        fs3 << " Not found" << endl;
     }
+    fs3.close();
     delete[] arrTemp;
 }
 
@@ -341,6 +367,9 @@ void addNode(hashtable &H, info table)
 }
 node *find_node(hashtable &H, string temp)
 {
+    fstream fsTime("Time.txt", ios::out | ios::app);
+    clock_t start, end;
+    start = clock();
     int num = hashKeys(temp);
     node *p = H[num];
     while (p != NULL && p->table.keys != temp)
@@ -349,8 +378,16 @@ node *find_node(hashtable &H, string temp)
     }
     if (p == NULL)
     {
+        end = clock();
+        double duration = (double)(end - start);
+        fsTime << " Time total:" << duration << "ms" << endl;
+        fsTime.close();
         return NULL;
     }
+    end = clock();
+    double duration = (double)(end - start);
+    fsTime << " Time total:" << duration << "ms" << endl;
+    fsTime.close();
     return p;
 }
 void loadFile(hashtable &H)
@@ -372,6 +409,7 @@ void loadFile(hashtable &H)
 void searchHash(hashtable &H)
 {
     fstream fsH("History.txt", ios::out | ios::app);
+    fsH << "ADD data" << endl;
     node *find;
     string temp;
     cout << "Enter: ";
@@ -393,6 +431,8 @@ void searchHash(hashtable &H)
 }
 void addDataHash(hashtable &H)
 {
+    fstream fs3("History.txt", ios::out | ios::app);
+    fs3 << "ADD data:" << endl;
     info table;
     string temp1;
     string temp2;
@@ -403,10 +443,13 @@ void addDataHash(hashtable &H)
     getline(cin, temp2);
     table.keys = temp1;
     table.value = temp2;
+    fs3 << temp1 << " : " << temp2 << endl;
     addNode(H, table);
 }
 void deleteDataHash(hashtable &H)
 {
+    fstream fs3("History.txt", ios::out | ios::app);
+    fs3 << " Deleted DATA " << endl;
     node *deleteData;
     string temp1;
     cout << "Enter Keys: ";
@@ -433,23 +476,29 @@ void deleteDataHash(hashtable &H)
 }
 void editDataHash(hashtable &H)
 {
+    fstream fs3("History.txt", ios::out | ios::app);
+    fs3 << " EDIT DATA" << endl;
     node *editDataHash;
     string temp1;
     cout << "Enter Keys: ";
     cin.ignore();
     getline(cin, temp1);
+    fs3 << temp1 << " : " << endl;
     editDataHash = find_node(H, temp1);
     if (editDataHash == NULL)
     {
-        cout << "Don't see" << endl
+        cout << "Not found" << endl
              << endl;
+        fs3 << " Not found" << endl;
     }
     else
     {
         cout << "Enter value: ";
         string temp2;
         getline(cin, temp2);
+        fs3 << " prev value: " << editDataHash->table.value << endl;
         editDataHash->table.value = temp2;
+        fs3 << " New value: " << temp2 << endl;
     }
 }
 void saveDataHash(hashtable &H)
@@ -480,6 +529,7 @@ void saveDataHash(hashtable &H)
 }
 void selectionHash(hashtable &H)
 {
+
     cout << " HASH TABLE " << endl;
     cout << "1. SEARCH" << endl;
     cout << "2. ADD DATA" << endl;
@@ -488,6 +538,7 @@ void selectionHash(hashtable &H)
     cout << " Choose your choice : ";
     int seletc;
     cin >> seletc;
+
     if (seletc == 1)
     {
         searchHash(H);
@@ -508,19 +559,23 @@ void selectionHash(hashtable &H)
 }
 int main()
 {
-
+    fstream fsTime("Time.txt", ios::out | ios::app);
+    fstream fsH("History.txt", ios::out | ios::app);
     system("color 02");
     system("cls");
     fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
     cout << "1. Run with array" << endl;
-    cout << "2. Run with table " << endl;
+    cout << "2. Run with  Hash Table " << endl;
     cout << "3.      EXIT        " << endl;
     cout << " Enter your choice: ";
     int Select;
     cin >> Select;
     if (Select == 1)
     {
+
+        fsH << "Run with array" << endl;
+        fsTime << "Run with array" << endl;
         input(fs);
         selection();
         system("pause");
@@ -528,6 +583,8 @@ int main()
     }
     else if (Select == 2)
     {
+        fsH << "Run with Hash Table" << endl;
+        fsTime << "Run with Hash Table" << endl;
         cout << "Loading..." << endl;
         input(fs);
         hashtable H;
