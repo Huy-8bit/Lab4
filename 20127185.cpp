@@ -360,6 +360,7 @@ void searchHash(hashtable &H)
     node *find;
     string temp;
     cout << "Enter: ";
+    cin.ignore();
     getline(cin, temp);
     find = find_node(H, temp);
     if (find == NULL)
@@ -415,6 +416,7 @@ void editDataHash(hashtable &H)
     node *editDataHash;
     string temp1;
     cout << "Enter Keys: ";
+    cin.ignore();
     getline(cin, temp1);
     editDataHash = find_node(H, temp1);
     if (editDataHash == NULL)
@@ -444,19 +446,19 @@ void saveDataHash(hashtable &H)
         node *temp = H[i];
         while (temp != NULL)
         {
-            if (temp->table.keys.size() > 0)
-            {
-                fs1 << temp->table.keys << endl;
-                fs2 << temp->table.value << endl;
-                temp = temp->next;
-            }
+
+            fs1 << temp->table.keys << endl;
+            fs2 << temp->table.value << endl;
+            temp = temp->next;
         }
+        delete[] temp;
     }
     fs1.close();
     fs2.close();
 }
 int main()
 {
+    fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
     cout << "1. Run with array" << endl;
     cout << "2. Run with table " << endl;
@@ -467,13 +469,12 @@ int main()
     if (Select == 1)
     {
         selection();
-        fstream fs("oxford English Dictionary.txt", ios::in);
-        input(fs);
 
-        fs.close();
+        input(fs);
     }
     else if (Select == 2)
     {
+        input(fs);
         hashtable H;
         tableInitialization(H);
         loadFile(H);
@@ -481,6 +482,8 @@ int main()
         addDataHash(H);
         deleteDataHash(H);
         editDataHash(H);
+        searchHash(H);
     }
+    fs.close();
     return 0;
 }
