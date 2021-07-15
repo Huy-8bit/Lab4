@@ -4,13 +4,8 @@
 #include <cstring>
 #include <fstream>
 #include <ctime>
-#include <Mmsystem.h>
-#include <mciapi.h>
-
-#pragma warning(disable : 4311)
-
+#include <Windows.h>
 using namespace std;
-
 
 #define sizeTable 12000
 struct info
@@ -87,7 +82,7 @@ void input(fstream &fsInFile)
                 getline(ss, keys, ' ');
                 getline(ss, value, '\n');
                 fs << keys << endl;
-                fs1 << keys << " :" << value << endl;
+                fs1 << value << endl;
             }
         }
         fs.clear();
@@ -181,7 +176,7 @@ void deleteData()
     fstream fs("keys.txt", ios::in);
     cout << " Enter keys: ";
     size = sizeFileInput(fs);
-    getline(cin, temp1); // bị trôi lệnh
+    cin.ignore();
     getline(cin, temp1);
     info *arr = new info[size];
     arr = inputArr(arr, size);
@@ -399,6 +394,7 @@ void deleteDataHash(hashtable &H)
     node *deleteData;
     string temp1;
     cout << "Enter Keys: ";
+    cin.ignore();
     getline(cin, temp1);
     int index = hashKeys(temp1);
     deleteData = find_node(H, temp1);
@@ -496,6 +492,7 @@ void selectionHash(hashtable &H)
 }
 int main()
 {
+    system("color 80");
     system("cls");
     fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
@@ -509,6 +506,8 @@ int main()
     {
         input(fs);
         selection();
+        system("pause");
+        main();
     }
     else if (Select == 2)
     {
@@ -518,8 +517,13 @@ int main()
         tableInitialization(H);
         loadFile(H);
         selectionHash(H);
+        system("pause");
+        main();
     }
+
+    Beep(523, 500);
+
     fs.close();
-    system("pause");
+
     return 0;
 }
