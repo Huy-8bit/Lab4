@@ -4,8 +4,14 @@
 #include <cstring>
 #include <fstream>
 #include <ctime>
+#include <Mmsystem.h>
+#include <mciapi.h>
+
+#pragma warning(disable : 4311)
 
 using namespace std;
+
+
 #define sizeTable 12000
 struct info
 {
@@ -64,7 +70,7 @@ void input(fstream &fsInFile)
     fstream fsTest("keys.txt", ios::in);
     int size = sizeFileInput(fsTest);
     fsTest.close();
-    if (size > 0)
+    if (size < 10)
     {
         fstream fs("keys.txt", ios::out);
         fstream fs1("value.txt", ios::out);
@@ -110,18 +116,18 @@ void search(info *arr, int size)
     }
     fs3.close();
 }
-void output(info *arrFinal, int &size)
+void saveFileArray(info *arrFinal, int &size)
 {
+    ofstream ofs1("keys.txt", std::ofstream::out);
+    ofs1.close();
+    ofstream ofs2("value.txt", std::ofstream::out);
+    ofs2.close();
     fstream fs1("keys.txt", ios::out);
     fstream fs2("value.txt", ios::out);
-    fs1.clear();
-    fs1.seekg(0, ios::beg);
-    fs2.clear();
-    fs2.seekg(0, ios::beg);
     for (int i = 0; i < size; i++)
     {
         fs1 << arrFinal[i].keys << endl;
-        fs2 << arrFinal[i].keys << " : " << arrFinal[i].value << endl;
+        fs2 << arrFinal[i].value << endl;
     }
     fs1.close();
     fs2.close();
@@ -184,7 +190,7 @@ void deleteData()
     {
         swap(arr[mid], arr[size - 1]);
         size--;
-        output(arr, size);
+        saveFileArray(arr, size);
     }
     else if (mid == -1)
     {
@@ -208,14 +214,13 @@ void editData()
     cin.ignore(); // bị trôi lệnh
     cin >> temp1;
     int mid = binarySearch(arrTemp, 0, size - 1, temp1);
-    cout << mid << endl;
     if (mid >= 0)
     {
         cout << "Enter value: ";
         cin.ignore();
         getline(cin, temp2);
         arrTemp[mid].value = temp2;
-        output(arrTemp, size);
+        saveFileArray(arrTemp, size);
     }
     else
     {
@@ -227,17 +232,11 @@ void editData()
 void process(int seletc)
 {
     int size;
-    fstream fsTemp("keys.txt", ios::in);
-    size = sizeFileInput(fsTemp);
-    if (size < 100)
-    {
-        fstream fsInFile("Oxford English Dictionary.txt", ios::in);
-        input(fsInFile);
-    }
-    fsTemp.close();
-
     if (seletc == 1)
     {
+        fstream fstemp("keys.txt", ios::in);
+        size = sizeFileInput(fstemp);
+        fstemp.close();
 
         info *arr = new info[size];
         arr = inputArr(arr, size);
@@ -257,18 +256,22 @@ void process(int seletc)
     {
         editData();
     }
-    fstream fsFinals("keys.txt", ios::in);
-    size = sizeFileInput(fsFinals);
-    fsFinals.close();
-    info *arrFinal = new info[size];
-    arrFinal = inputArr(arrFinal, size);
-    arrFinal = insertionSort(arrFinal, size);
-    output(arrFinal, size);
-    delete[] arrFinal;
+    if (seletc != 1)
+    {
+        fstream fsFinals("keys.txt", ios::in);
+        size = sizeFileInput(fsFinals);
+        fsFinals.close();
+        info *arrFinal = new info[size];
+        arrFinal = inputArr(arrFinal, size);
+        arrFinal = insertionSort(arrFinal, size);
+        saveFileArray(arrFinal, size);
+        delete[] arrFinal;
+    }
 }
 
 void selection()
 {
+    cout << "Loading..." << endl;
     cout << " ARRAY " << endl;
     cout << "1. SEARCH" << endl;
     cout << "2. ADD DATA" << endl;
@@ -280,8 +283,8 @@ void selection()
     cin >> seletc;
     if (seletc < 5)
     {
+
         process(seletc);
-        selection();
     }
 }
 
@@ -443,7 +446,6 @@ void saveDataHash(hashtable &H)
     ofs1.close();
     ofstream ofs2("value.txt", std::ofstream::out);
     ofs2.close();
-    system("pause");
     fstream fs1("keys.txt", ios::out);
     fstream fs2("value.txt", ios::out);
 
@@ -457,7 +459,7 @@ void saveDataHash(hashtable &H)
                 fs1 << temp->table.keys << endl;
                 fs2 << temp->table.value << endl;
             }
-             temp = temp->next;
+            temp = temp->next;
         }
         delete[] temp;
     }
@@ -494,6 +496,7 @@ void selectionHash(hashtable &H)
 }
 int main()
 {
+    system("cls");
     fstream fs("oxford English Dictionary.txt", ios::in);
     cout << "LAB5_20127185_Nguyen Gia Huy" << endl;
     cout << "1. Run with array" << endl;
@@ -502,12 +505,10 @@ int main()
     cout << " Enter your choice: ";
     int Select;
     cin >> Select;
-    //Select = 2;
     if (Select == 1)
     {
-        selection();
-        main();
         input(fs);
+        selection();
     }
     else if (Select == 2)
     {
@@ -517,9 +518,8 @@ int main()
         tableInitialization(H);
         loadFile(H);
         selectionHash(H);
-        main();
     }
-
     fs.close();
+    system("pause");
     return 0;
 }
