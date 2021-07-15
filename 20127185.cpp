@@ -452,10 +452,12 @@ void saveDataHash(hashtable &H)
         node *temp = H[i];
         while (temp != NULL)
         {
-
-            fs1 << temp->table.keys << endl;
-            fs2 << temp->table.value << endl;
-            temp = temp->next;
+            if (temp->table.keys.length() > 1)
+            {
+                fs1 << temp->table.keys << endl;
+                fs2 << temp->table.value << endl;
+            }
+             temp = temp->next;
         }
         delete[] temp;
     }
@@ -469,9 +471,7 @@ void selectionHash(hashtable &H)
     cout << "2. ADD DATA" << endl;
     cout << "3. DELETE DATA" << endl;
     cout << "4. EDIT DATA" << endl;
-    cout << endl
-         << endl
-         << " Choose your choice : ";
+    cout << " Choose your choice : ";
     int seletc;
     cin >> seletc;
     if (seletc == 1)
