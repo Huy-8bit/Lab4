@@ -423,7 +423,7 @@ void searchHash(hashtable &H)
     fsH << "ADD data" << endl;
     node *find;
     string temp;
-    cout << "Enter: ";
+    cout << "Enter keys: ";
     cin.ignore();
     getline(cin, temp);
     find = find_node(H, temp);
