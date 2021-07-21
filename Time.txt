@@ -20,3 +20,7 @@ binarySearch  Time total:0ms
 Run with array
 Sort array:  Time total:23765ms
 binarySearch  Time total:0ms
+Run with  AVL Tree
+Run with  AVL Tree
+Run with  AVL Tree
+Run with  AVL Tree
