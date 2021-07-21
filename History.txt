@@ -37,3 +37,10 @@ Run with AVL Tree
 Run with AVL Tree
 Run with AVL Tree
 Run with AVL Tree
+Run with AVL Tree
+Run with Hash Table
+ADD data
+Huy : Not found
+Run with AVL Tree
+Run with AVL Tree
+Run with AVL Tree
