@@ -819,6 +819,7 @@ void selectionTree()
     }
     fstream fsSave("keys.txt",ios::out);
     saveDataTree(t);
+    fsSave.close();
 }
 int main()
 {
