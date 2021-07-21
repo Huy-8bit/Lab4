@@ -33,3 +33,7 @@ Canoodle :  v. (-ling) colloq. Kiss and cuddle. [origin unknown]
 Run with array
 Search : 
 Huy :  Don't see it
+Run with AVL Tree
+Run with AVL Tree
+Run with AVL Tree
+Run with AVL Tree
