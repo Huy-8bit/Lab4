@@ -636,15 +636,15 @@ Node *FindNode(Tree root, string keys)
     return NULL;
 }
 
-void PrintTree(Tree root)
+void saveDataTree(Tree root)
 {
     if (root)
     {
-        PrintTree(root->left);
+        saveDataTree(root->left);
         cout << endl
              << root->data.keys
              << ' ';
-        PrintTree(root->right);
+        saveDataTree(root->right);
     }
 }
 
@@ -732,15 +732,16 @@ void processTree(Tree t, int seletc)
         cout << endl
              << "Input data to search: ";
         cin >> temps;
-        if (FindNode(t, temps) == NULL)
+        Node *find = FindNode(t, temps);
+        if (find == NULL)
         {
             cout << endl
-                 << "Not find";
+                 << "Not find" << endl;
         }
         else
         {
             cout << endl
-                 << "Exist";
+                 << find->data.keys << " : " << find->data.value << endl;
         }
     }
     else if (seletc == 2)
@@ -761,6 +762,27 @@ void processTree(Tree t, int seletc)
              << "Enter keys delete ";
         cin >> temps;
         DeleteNode(t, temps);
+    }
+    else if (seletc == 4)
+    {
+        cout << endl
+             << "Input data to Edit: ";
+        cin >> temps;
+        Node *find = FindNode(t, temps);
+        if (find == NULL)
+        {
+            cout << endl
+                 << "Not find" << endl;
+        }
+        else
+        {
+            cout << endl
+                 << " prev data : " << find->data.keys << find->data.value << endl;
+            string value;
+            cout << "Enter new data ";
+            getline(cin, value);
+            find->data.value = value;
+        }
     }
 }
 void selectionTree()
@@ -795,6 +817,8 @@ void selectionTree()
     {
         processTree(t, seletc);
     }
+    fstream fsSave("keys.txt",ios::out);
+    saveDataTree(t);
 }
 int main()
 {
